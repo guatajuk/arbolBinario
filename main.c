@@ -20,14 +20,35 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*----------------------------------------------*
- |Julián Alberto Gaitán Arias                   |
+ |Julián Alberto Gaitán Arias					|
  |Universidad de Caldas - Facultad de Ingeniería|
- |Ingeniería en Sistemas y Computación          |
- |Twitter: @guatajuk                            |
+ |Ingeniería en Sistemas y Computación			|
+ |Twitter: @guatajuk							|
+ |GitHub: guatajuk								|
  *--------------------------------------------- */
 
 #include <stdio.h>
 #include <stdlib.h>
+
+typedef struct tipoNodo {
+	int dato;
+	struct tipoNodo *hijoDerecho;
+	struct tipoNodo *hijoIzquierdo;
+}tipoNodo;
+
+void agregarNodo (tipoNodo *raiz){
+	int num;
+	printf ("\nIngrese un numero: ");
+	scanf ("%d", &num);
+	if (raiz == NULL){
+		raiz = (tipoNodo *) malloc (sizeof(tipoNodo));
+		raiz -> dato = num;
+		raiz -> hijoIzquierdo = NULL;
+		raiz -> hijoDerecho = NULL;
+	}
+	system("clear");
+	printf ("El valor agregado: %d", raiz -> dato);
+}
 
 int menu (){
 	int opc;
@@ -36,9 +57,9 @@ int menu (){
 		printf ("\nArboles Binarios - Menu");
 		printf ("\n------------------------");
 		printf ("\n1. Agregar nodos a el arbol");
-		printf ("\n2. Eliminar todos los nodos del arbol");
+		printf ("\n2. Eliminar tsodos los nodos del arbol");
 		printf ("\n3. Mostrar recorridos");
-		printf ("\n4. Salir");
+		printf ("\n0. Salir");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
 		if (opc < 0 || opc > 4){
@@ -51,5 +72,24 @@ int menu (){
 }
 
 int main (){
+	int opc;
+	tipoNodo *raiz = NULL;
+	do {
+		opc = menu();
+		switch(opc){
+			case 1: agregarNodo(raiz);
+			break;
+		}
+	}while (opc != 0);
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
