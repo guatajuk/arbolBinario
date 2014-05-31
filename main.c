@@ -19,29 +19,37 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/*-------------------------------------------|
-|Julián Alberto Gaitán Arias                 |
-|Universidad de Caldas Facultad de Ingeniería|
-|Ingeniería en Sistemas y Computación        |
-|Twitter: @guatajuk                          |
---------------------------------------------*/
+/*----------------------------------------------*
+ |Julián Alberto Gaitán Arias                   |
+ |Universidad de Caldas - Facultad de Ingeniería|
+ |Ingeniería en Sistemas y Computación          |
+ |Twitter: @guatajuk                            |
+ *--------------------------------------------- */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int menu (){
 	int opc;
-	printf ("------------------------")
-	printf ("Arboles Binarios - Menu");
-	printf ("------------------------\n")
-	printf ("\n1. Agregar nodos a el arbol");
-	printf ("\n2. Eliminar todos los nodos del arbol");
-	printf ("\n3. Salir");
-	printf ("\tDigite su opción");
-	scanf ("%d", &opc);
+	do{
+		printf ("\n------------------------");
+		printf ("\nArboles Binarios - Menu");
+		printf ("\n------------------------");
+		printf ("\n1. Agregar nodos a el arbol");
+		printf ("\n2. Eliminar todos los nodos del arbol");
+		printf ("\n3. Mostrar recorridos");
+		printf ("\n4. Salir");
+		printf ("\n\tDigite su opción: ");
+		scanf ("%d", &opc);
+		if (opc < 0 || opc > 4){
+			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
+			getchar();
+			system("clear");
+		}
+	}while (opc < 0 || opc > 4);
 	return opc;
 }
-/* code */
 
-int main void (){
+int main (){
 	return 0;
 }
