@@ -10,10 +10,10 @@ implementados las siguientes funciones:
 - Recorrido inorden
 - Altura del árbol
 - Cantidad de hojas
+- Recorrido por nivel
 
 Próximamente se implementará:
 
-- Recorrido por nivel
 - Mostrar las ramas del árbol
 - Mostrar la rama más larga
 - Mostrar la rama más corta
