@@ -138,6 +138,25 @@ int altura (tipoArbol *raiz){
 	return 0;
 }
 
+void cargarNodos (tipoArbol **raiz){
+	agregarNodo (&(*raiz), 10);
+ 	agregarNodo (&(*raiz), 5);
+ 	agregarNodo (&(*raiz), 14);
+ 	agregarNodo (&(*raiz), 4);
+	agregarNodo (&(*raiz), 7);
+	agregarNodo (&(*raiz), 12);
+	agregarNodo (&(*raiz), 16);
+	agregarNodo (&(*raiz), 2);
+	agregarNodo (&(*raiz), 3);
+	agregarNodo (&(*raiz), 6);
+	agregarNodo (&(*raiz), 8);
+	agregarNodo (&(*raiz), 11);
+	agregarNodo (&(*raiz), 13);
+	agregarNodo (&(*raiz), 15);
+	agregarNodo (&(*raiz), 17);
+	printf ("Se han cargado 15 valores predeterminados");
+}
+
 int menu (){
 	system("clear");
 	int opc;
@@ -197,7 +216,7 @@ int main (){
 			case 1:
  				printf ("\nDigite un numero: ");
  				scanf("%d", &num);
- 				//agregarNodo (&raiz, num);
+ 				//agregarNodo (&(*raiz), num);
  				system("clear"); 
  				printf ("\nSe ha agregado el numero %d", num);
 			break;
@@ -238,22 +257,7 @@ int main (){
 			break;
 			case 6: 
 				system("clear");
-				agregarNodo (&raiz, 10);
- 				agregarNodo (&raiz, 5);
- 				agregarNodo (&raiz, 14);
- 				agregarNodo (&raiz, 4);
- 				agregarNodo (&raiz, 7);
- 				agregarNodo (&raiz, 12);
- 				agregarNodo (&raiz, 16);
- 				agregarNodo (&raiz, 2);
- 				agregarNodo (&raiz, 3);
- 				agregarNodo (&raiz, 6);
-				agregarNodo (&raiz, 8);
- 				agregarNodo (&raiz, 11);
- 				agregarNodo (&raiz, 13);
-				agregarNodo (&raiz, 15);
- 				agregarNodo (&raiz, 17);
- 				printf ("Se han cargado 15 valores predeterminados");
+				cargarNodos(&raiz);
  			break;
 		}
 	}while (opc != 0);
