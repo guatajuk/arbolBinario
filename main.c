@@ -30,25 +30,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct tipoNodo {
+typedef struct tipoArbol {
 	int dato;
-	struct tipoNodo *hijoDerecho;
-	struct tipoNodo *hijoIzquierdo;
-}tipoNodo;
+	struct tipoArbol *hijoDerecho;
+	struct tipoArbol *hijoIzquierdo;
+}tipoArbol;
 
-//tipoNodo *raiz = NULL;
+typedef struct tipoLista {
+	struct tipoArbol hoja;
+	struct tipoLista *siguiente;
+}tipoLista;
 
-void agregarNodo (tipoNodo **raiz, int numero){
+void push (tipoLista **lista, tipoArbol hoja){
+	if (*lista == NULL){
+		*lista = (tipoLista *) malloc (sizeof(tipoLista));
+		(*lista) -> hoja = hoja;
+		(*lista) -> siguiente = NULL;
+	}
+	else{
+		tipoLista *aux = NULL; 
+		aux = (tipoLista *) malloc (sizeof(tipoLista));
+		aux -> hoja = hoja;
+		aux -> siguiente = *lista;
+		*lista = aux;
+	}
+}
+
+void mostrarPila (tipoLista *lista){
+	if (lista != NULL){
+		tipoLista *aux = lista;
+		while (aux != NULL){
+			tipoArbol *hoja;
+			hoja = (tipoArbol *) malloc (sizeof(tipoArbol));	
+			*hoja = aux -> hoja;
+			printf ("\t%d", hoja -> dato);
+			free(hoja);
+			aux = aux -> siguiente;
+		}
+	}
+}
+
+void agregarNodo (tipoArbol **raiz, int numero){
 	if (*raiz == NULL){
-		*raiz = (tipoNodo *) malloc (sizeof(tipoNodo));
+		*raiz = (tipoArbol *) malloc (sizeof(tipoArbol));
 		(*raiz) -> dato = numero;
 		(*raiz) -> hijoIzquierdo = NULL;
 		(*raiz) -> hijoDerecho = NULL;
-		system("clear");
 	}
 	else{
 		if (numero < (*raiz) -> dato){
-			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);	
+			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);
 		}
 		else{
 			agregarNodo(&(*raiz) -> hijoDerecho, numero);
@@ -56,7 +87,7 @@ void agregarNodo (tipoNodo **raiz, int numero){
 	}
 }
 
-void preOrden (tipoNodo *raiz){
+void preOrden (tipoArbol *raiz){
 	if (raiz != NULL){
 		printf ("\t%d", raiz -> dato);
 		preOrden (raiz -> hijoIzquierdo);
@@ -64,7 +95,7 @@ void preOrden (tipoNodo *raiz){
 	}
 }
 
-void postOrden (tipoNodo *raiz){
+void postOrden (tipoArbol *raiz){
 	if (raiz != NULL){
 		postOrden (raiz -> hijoIzquierdo);
 		postOrden (raiz -> hijoDerecho);
@@ -72,7 +103,7 @@ void postOrden (tipoNodo *raiz){
 	}
 }
 
-void inOrden (tipoNodo *raiz){
+void inOrden (tipoArbol *raiz){
 	if (raiz != NULL){
 		inOrden (raiz -> hijoIzquierdo);
 		printf ("\t%d", raiz -> dato);
@@ -80,7 +111,7 @@ void inOrden (tipoNodo *raiz){
 	}
 }
 
-int contarHojas (tipoNodo *raiz){
+int contarHojas (tipoArbol *raiz){
 	if (raiz == NULL){
 		return 0;
 	}
@@ -93,7 +124,7 @@ int contarHojas (tipoNodo *raiz){
 	}
 }
 
-int altura (tipoNodo *raiz){
+int altura (tipoArbol *raiz){
 	if(raiz != NULL){
 		int alturaIzquierda = 1 + altura(raiz -> hijoIzquierdo);
 		int alturaDerecha = 1 + altura (raiz -> hijoDerecho);
@@ -124,9 +155,10 @@ int menu (){
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
 		if (opc < 0 || opc > 6){
-			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
-			getchar();
 			system("clear");
+			getchar();
+			printf ("Error - Opcion incorrecta");
+
 		}
 	}while (opc < 0 || opc > 6);
 	return opc;
@@ -157,14 +189,15 @@ int main (){
 	int opc;
 	int aux;
 	int num;
-	tipoNodo *raiz = NULL;
+	tipoArbol *raiz = NULL;
+	tipoLista *lista = NULL;
 	do {
 		opc = menu();
 		switch(opc){
 			case 1:
  				printf ("\nDigite un numero: ");
  				scanf("%d", &num);
- 				agregarNodo (&raiz, num);
+ 				//agregarNodo (&raiz, num);
  				system("clear"); 
  				printf ("\nSe ha agregado el numero %d", num);
 			break;
@@ -220,7 +253,7 @@ int main (){
  				agregarNodo (&raiz, 13);
 				agregarNodo (&raiz, 15);
  				agregarNodo (&raiz, 17);
- 				printf ("\nSe han cargado 15 valores predeterminados");
+ 				printf ("Se han cargado 15 valores predeterminados");
  			break;
 		}
 	}while (opc != 0);
