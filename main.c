@@ -80,6 +80,19 @@ void inOrden (tipoNodo *raiz){
 	}
 }
 
+int contarHojas (tipoNodo *raiz){
+	if (raiz != NULL){
+		if (raiz -> hijoDerecho == NULL && raiz -> hijoIzquierdo == NULL){
+			printf ("\n%d es hoja", raiz -> dato);
+			return 1;
+		}
+		else{
+			return contarHojas(raiz -> hijoIzquierdo) + contarHojas(raiz -> hijoDerecho);
+		}
+	}
+	return 0;
+}
+
 int menu (){
 	system("clear");
 	int opc;
@@ -90,15 +103,17 @@ int menu (){
 		printf ("\n1. Agregar nodos a el arbol");
 		printf ("\n2. Eliminar tsodos los nodos del arbol");
 		printf ("\n3. Recorridos");
+		printf ("\n4. Contar hojas");
+		printf ("\n5. Carga rapida");
 		printf ("\n0. Salir");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
-		if (opc < 0 || opc > 4){
+		if (opc < 0 || opc > 5){
 			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
-	}while (opc < 0 || opc > 4);
+	}while (opc < 0 || opc > 5);
 	return opc;
 }
 
@@ -112,8 +127,7 @@ int menuRecorridos (){
 		printf ("\n1. Preorden");
 		printf ("\n2. Inorden");
 		printf ("\n3. Postorden");
-		printf ("\n4. Carga rapida");
-		printf("\n0. Volver");
+		printf ("\n0. Volver");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
 		if (opc < 0 || opc > 3){
@@ -140,6 +154,7 @@ int main (){
 			break;
 			case 2:
 				raiz = NULL;
+				break;
 			case 3:	
 				do{
 					switch (aux = menuRecorridos()){
@@ -158,7 +173,10 @@ int main (){
 					}
 				}while (aux != 0);
 			break;
-			case 4: 
+			case 4:
+				printf ("\nLa cantidad de hojas es: %d ", contarHojas(raiz));
+			break;
+			case 5: 
 				agregarNodo (&raiz, 10);
  				agregarNodo (&raiz, 5);
  				agregarNodo (&raiz, 14);
@@ -176,6 +194,7 @@ int main (){
  				agregarNodo (&raiz, 17);
  			break;
 		}
+		system("clear");
 	}while (opc != 0);
 	system("clear");
 	return 0;
