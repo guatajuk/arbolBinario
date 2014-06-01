@@ -47,7 +47,7 @@ void agregarNodo (tipoNodo **raiz, int numero){
 		system("clear");
 	}
 	else{
-		if ((*raiz) -> dato >= numero){
+		if (numero < (*raiz) -> dato){
 			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);	
 		}
 		else{
@@ -81,13 +81,27 @@ void inOrden (tipoNodo *raiz){
 }
 
 int contarHojas (tipoNodo *raiz){
-	if (raiz != NULL){
-		if (raiz -> hijoDerecho == NULL && raiz -> hijoIzquierdo == NULL){
-			printf ("\n%d es hoja", raiz -> dato);
-			return 1;
+	if (raiz == NULL){
+		return 0;
+	}
+	if (raiz -> hijoDerecho == NULL && raiz -> hijoIzquierdo == NULL){
+		printf ("\n%d es hoja", raiz -> dato);
+		return 1;
+	}
+	else{
+		return contarHojas(raiz -> hijoIzquierdo) + contarHojas(raiz -> hijoDerecho);
+	}
+}
+
+int altura (tipoNodo *raiz){
+	if(raiz != NULL){
+		int alturaIzquierda = 1 + altura(raiz -> hijoIzquierdo);
+		int alturaDerecha = 1 + altura (raiz -> hijoDerecho);
+		if (alturaIzquierda > alturaDerecha){
+			return alturaIzquierda;
 		}
 		else{
-			return contarHojas(raiz -> hijoIzquierdo) + contarHojas(raiz -> hijoDerecho);
+			return alturaDerecha;
 		}
 	}
 	return 0;
@@ -104,16 +118,17 @@ int menu (){
 		printf ("\n2. Eliminar tsodos los nodos del arbol");
 		printf ("\n3. Recorridos");
 		printf ("\n4. Contar hojas");
-		printf ("\n5. Carga rapida");
+		printf ("\n5. Calcular altura");
+		printf ("\n6. Carga rapida");
 		printf ("\n0. Salir");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
-		if (opc < 0 || opc > 5){
+		if (opc < 0 || opc > 6){
 			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
-	}while (opc < 0 || opc > 5);
+	}while (opc < 0 || opc > 6);
 	return opc;
 }
 
@@ -176,7 +191,10 @@ int main (){
 			case 4:
 				printf ("\nLa cantidad de hojas es: %d ", contarHojas(raiz));
 			break;
-			case 5: 
+			case 5:
+				printf ("\nLa altura del arbol es de %d niveles", altura(raiz));
+			break;
+			case 6: 
 				agregarNodo (&raiz, 10);
  				agregarNodo (&raiz, 5);
  				agregarNodo (&raiz, 14);
