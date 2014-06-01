@@ -138,6 +138,26 @@ int treeHeight (binaryTree *root){
 	return 0;
 }
 
+void showLevel(binaryTree *root, int level) {
+	if (root != NULL){
+		if (level == 1) {
+			printf ("%d \t", root -> data);
+		} 
+		else {
+			printLevel(root -> leftChild, level-1);
+			printLevel(root -> rightChild, level-1);
+		}	
+	}
+}
+
+void showTree(binaryTree *root) {
+	int height = treeHeight(root);
+	for (int level = 1; level <= height; level++) {
+		printf ("\nNivel %d -> ", level);
+		showLevel(root, level);	
+	}
+}
+
 void preload (binaryTree **root){
 	addNode (&(*root), 10);
  	addNode (&(*root), 5);
@@ -158,27 +178,27 @@ void preload (binaryTree **root){
 }
 
 int menu (){
-	system("clear");
 	int opc;
 	do{
 		printf ("\n---------------------------------");
 		printf ("\nArboles Binarios - Menu Principal");
 		printf ("\n---------------------------------");
-		printf ("\n1. Agregar nodos a el arbol");
+		printf ("\n1. Agregar nodos al arbol");
 		printf ("\n2. Eliminar todos los nodos del arbol");
 		printf ("\n3. Recorridos");
 		printf ("\n4. Contar hojas");
 		printf ("\n5. Calcular altura");
-		printf ("\n6. Carga rapida");
+		printf ("\n6. Mostrar el arbol por niveles");
+		printf ("\n7. Carga rapida");
 		printf ("\n0. Salir");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
-		if (opc < 0 || opc > 6){
+		if (opc < 0 || opc > 7){
 			system("clear");
 			printf ("Error - Opcion incorrecta");
 
 		}
-	}while (opc < 0 || opc > 6);
+	}while (opc < 0 || opc > 7);
 	return opc;
 }
 
@@ -204,6 +224,7 @@ int traversalMenu (){
 }
 
 int main (){
+	system("clear");
 	int opc;
 	int aux;
 	int num;
@@ -217,12 +238,12 @@ int main (){
  				scanf("%d", &num);
  				//addNode (&(*root), num);
  				system("clear"); 
- 				printf ("\nSe ha agregado el number %d", num);
+ 				printf ("Se ha agregado el numero %d", num);
 			break;
 			case 2:
 				system("clear"); 
 				root = NULL;
-				printf ("\nSe ha borrado el arbol");
+				printf ("Se ha borrado el arbol");
 			break;
 			case 3:	
 				system("clear");
@@ -245,6 +266,7 @@ int main (){
 						break;
 					}
 				}while (aux != 0);
+				system("clear");
 			break;
 			case 4:
 				system("clear");
@@ -254,7 +276,11 @@ int main (){
 				system("clear");
 				printf ("\nLa treeHeight del arbol es de %d niveles", treeHeight(root));
 			break;
-			case 6: 
+ 			case 6:
+ 				system("clear");
+ 				showTree(root);
+ 			break;
+ 			case 7: 
 				system("clear");
 				preload(&root);
  			break;
