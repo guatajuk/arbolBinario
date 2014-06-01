@@ -2,11 +2,18 @@ arbolBinario
 ============
 
 Programa escrito en C que modela diferentes propiedades de los árboles binarios. Hasta el momento solo están
-implementados los recorridos del árbol (inorden, preorden y postorden)... espero que la proxima semana el 
-proyecto pueda tener varias funcionalidades como:
+implementados las siguientes funciones:
 
-- Mostrar altura del árbol
-- Contar hojas
+- Agregar nodos
+- Recorrido preorden
+- Recorrido postorden
+- Recorrido inorden
+- Altura del árbol
+- Cantidad de hojas
+
+Próximamente se implementará:
+
+- Recorrido por nivel
 - Mostrar las ramas del árbol
 - Mostrar la rama más larga
 - Mostrar la rama más corta
