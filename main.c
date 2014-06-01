@@ -30,130 +30,130 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct tipoArbol {
-	int dato;
-	struct tipoArbol *hijoDerecho;
-	struct tipoArbol *hijoIzquierdo;
-}tipoArbol;
+typedef struct binaryTree {
+	int data;
+	struct binaryTree *rightChild;
+	struct binaryTree *leftChild;
+}binaryTree;
 
-typedef struct tipoLista {
-	struct tipoArbol hoja;
-	struct tipoLista *siguiente;
-}tipoLista;
+typedef struct linkedList {
+	struct binaryTree leaf;
+	struct linkedList *next;
+}linkedList;
 
-void push (tipoLista **lista, tipoArbol hoja){
-	if (*lista == NULL){
-		*lista = (tipoLista *) malloc (sizeof(tipoLista));
-		(*lista) -> hoja = hoja;
-		(*lista) -> siguiente = NULL;
+void push (linkedList **list, binaryTree leaf){
+	if (*list == NULL){
+		*list = (linkedList *) malloc (sizeof(linkedList));
+		(*list) -> leaf = leaf;
+		(*list) -> next = NULL;
 	}
 	else{
-		tipoLista *aux = NULL; 
-		aux = (tipoLista *) malloc (sizeof(tipoLista));
-		aux -> hoja = hoja;
-		aux -> siguiente = *lista;
-		*lista = aux;
+		linkedList *aux = NULL; 
+		aux = (linkedList *) malloc (sizeof(linkedList));
+		aux -> leaf = leaf;
+		aux -> next = *list;
+		*list = aux;
 	}
 }
 
-void mostrarPila (tipoLista *lista){
-	if (lista != NULL){
-		tipoLista *aux = lista;
+void showStack (linkedList *list){
+	if (list != NULL){
+		linkedList *aux = list;
 		while (aux != NULL){
-			tipoArbol *hoja;
-			hoja = (tipoArbol *) malloc (sizeof(tipoArbol));	
-			*hoja = aux -> hoja;
-			printf ("\t%d", hoja -> dato);
-			free(hoja);
-			aux = aux -> siguiente;
+			binaryTree *leaf;
+			leaf = (binaryTree *) malloc (sizeof(binaryTree));	
+			*leaf = aux -> leaf;
+			printf ("\t%d", leaf -> data);
+			free(leaf);
+			aux = aux -> next;
 		}
 	}
 }
 
-void agregarNodo (tipoArbol **raiz, int numero){
-	if (*raiz == NULL){
-		*raiz = (tipoArbol *) malloc (sizeof(tipoArbol));
-		(*raiz) -> dato = numero;
-		(*raiz) -> hijoIzquierdo = NULL;
-		(*raiz) -> hijoDerecho = NULL;
+void addNode (binaryTree **root, int number){
+	if (*root == NULL){
+		*root = (binaryTree *) malloc (sizeof(binaryTree));
+		(*root) -> data = number;
+		(*root) -> leftChild = NULL;
+		(*root) -> rightChild = NULL;
 	}
 	else{
-		if (numero < (*raiz) -> dato){
-			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);
+		if (number < (*root) -> data){
+			addNode(&(*root) -> leftChild, number);
 		}
 		else{
-			agregarNodo(&(*raiz) -> hijoDerecho, numero);
+			addNode(&(*root) -> rightChild, number);
 		}
 	}
 }
 
-void preOrden (tipoArbol *raiz){
-	if (raiz != NULL){
-		printf ("\t%d", raiz -> dato);
-		preOrden (raiz -> hijoIzquierdo);
-		preOrden (raiz -> hijoDerecho);
+void preOrder (binaryTree *root){
+	if (root != NULL){
+		printf ("\t%d", root -> data);
+		preOrder (root -> leftChild);
+		preOrder (root -> rightChild);
 	}
 }
 
-void postOrden (tipoArbol *raiz){
-	if (raiz != NULL){
-		postOrden (raiz -> hijoIzquierdo);
-		postOrden (raiz -> hijoDerecho);
-		printf ("\t%d", raiz -> dato);
+void postOrder (binaryTree *root){
+	if (root != NULL){
+		postOrder (root -> leftChild);
+		postOrder (root -> rightChild);
+		printf ("\t%d", root -> data);
 	}
 }
 
-void inOrden (tipoArbol *raiz){
-	if (raiz != NULL){
-		inOrden (raiz -> hijoIzquierdo);
-		printf ("\t%d", raiz -> dato);
-		inOrden (raiz -> hijoDerecho);
+void inOrder (binaryTree *root){
+	if (root != NULL){
+		inOrder (root -> leftChild);
+		printf ("\t%d", root -> data);
+		inOrder (root -> rightChild);
 	}
 }
 
-int contarHojas (tipoArbol *raiz){
-	if (raiz == NULL){
+int countLeaves (binaryTree *root){
+	if (root == NULL){
 		return 0;
 	}
-	if (raiz -> hijoDerecho == NULL && raiz -> hijoIzquierdo == NULL){
-		printf ("\n%d es hoja", raiz -> dato);
+	if (root -> rightChild == NULL && root -> leftChild == NULL){
+		printf ("\n%d Es hoja", root -> data);
 		return 1;
 	}
 	else{
-		return contarHojas(raiz -> hijoIzquierdo) + contarHojas(raiz -> hijoDerecho);
+		return countLeaves(root -> leftChild) + countLeaves(root -> rightChild);
 	}
 }
 
-int altura (tipoArbol *raiz){
-	if(raiz != NULL){
-		int alturaIzquierda = 1 + altura(raiz -> hijoIzquierdo);
-		int alturaDerecha = 1 + altura (raiz -> hijoDerecho);
-		if (alturaIzquierda > alturaDerecha){
-			return alturaIzquierda;
+int treeHeight (binaryTree *root){
+	if(root != NULL){
+		int leftHeight = 1 + treeHeight(root -> leftChild);
+		int rightHeight = 1 + treeHeight (root -> rightChild);
+		if (leftHeight > rightHeight){
+			return leftHeight;
 		}
 		else{
-			return alturaDerecha;
+			return rightHeight;
 		}
 	}
 	return 0;
 }
 
-void cargarNodos (tipoArbol **raiz){
-	agregarNodo (&(*raiz), 10);
- 	agregarNodo (&(*raiz), 5);
- 	agregarNodo (&(*raiz), 14);
- 	agregarNodo (&(*raiz), 4);
-	agregarNodo (&(*raiz), 7);
-	agregarNodo (&(*raiz), 12);
-	agregarNodo (&(*raiz), 16);
-	agregarNodo (&(*raiz), 2);
-	agregarNodo (&(*raiz), 3);
-	agregarNodo (&(*raiz), 6);
-	agregarNodo (&(*raiz), 8);
-	agregarNodo (&(*raiz), 11);
-	agregarNodo (&(*raiz), 13);
-	agregarNodo (&(*raiz), 15);
-	agregarNodo (&(*raiz), 17);
+void preload (binaryTree **root){
+	addNode (&(*root), 10);
+ 	addNode (&(*root), 5);
+ 	addNode (&(*root), 14);
+ 	addNode (&(*root), 4);
+	addNode (&(*root), 7);
+	addNode (&(*root), 12);
+	addNode (&(*root), 16);
+	addNode (&(*root), 2);
+	addNode (&(*root), 3);
+	addNode (&(*root), 6);
+	addNode (&(*root), 8);
+	addNode (&(*root), 11);
+	addNode (&(*root), 13);
+	addNode (&(*root), 15);
+	addNode (&(*root), 17);
 	printf ("Se han cargado 15 valores predeterminados");
 }
 
@@ -175,7 +175,6 @@ int menu (){
 		scanf ("%d", &opc);
 		if (opc < 0 || opc > 6){
 			system("clear");
-			getchar();
 			printf ("Error - Opcion incorrecta");
 
 		}
@@ -183,7 +182,7 @@ int menu (){
 	return opc;
 }
 
-int menuRecorridos (){
+int traversalMenu (){
 	int opc;
 	do{
 		printf ("\n-----------------------------");
@@ -208,56 +207,56 @@ int main (){
 	int opc;
 	int aux;
 	int num;
-	tipoArbol *raiz = NULL;
-	tipoLista *lista = NULL;
+	binaryTree *root = NULL;
+	linkedList *list = NULL;
 	do {
 		opc = menu();
 		switch(opc){
 			case 1:
- 				printf ("\nDigite un numero: ");
+ 				printf ("\nDigite un number: ");
  				scanf("%d", &num);
- 				//agregarNodo (&(*raiz), num);
+ 				//addNode (&(*root), num);
  				system("clear"); 
- 				printf ("\nSe ha agregado el numero %d", num);
+ 				printf ("\nSe ha agregado el number %d", num);
 			break;
 			case 2:
 				system("clear"); 
-				raiz = NULL;
+				root = NULL;
 				printf ("\nSe ha borrado el arbol");
 			break;
 			case 3:	
 				system("clear");
 				do{
-					switch (aux = menuRecorridos()){
+					switch (aux = traversalMenu()){
 						case 1: 
 							system("clear");
 							printf("\nPreorden: ");
-							preOrden(raiz);
+							preOrder(root);
 						break;
 						case 2: 
 							system("clear");
 							printf ("\nInorden: ");
-							inOrden(raiz);
+							inOrder(root);
 						break;
 						case 3: 
 							system("clear");
 							printf ("\nPostorden: ");
-							postOrden(raiz);
+							postOrder(root);
 						break;
 					}
 				}while (aux != 0);
 			break;
 			case 4:
 				system("clear");
-				printf ("\nEl arbol tiene %d hojas", contarHojas(raiz));
+				printf ("\nEl arbol tiene %d hojas", countLeaves(root));
 			break;
 			case 5:
 				system("clear");
-				printf ("\nLa altura del arbol es de %d niveles", altura(raiz));
+				printf ("\nLa treeHeight del arbol es de %d niveles", treeHeight(root));
 			break;
 			case 6: 
 				system("clear");
-				cargarNodos(&raiz);
+				preload(&root);
  			break;
 		}
 	}while (opc != 0);
