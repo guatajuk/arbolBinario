@@ -36,21 +36,37 @@ typedef struct tipoNodo {
 	struct tipoNodo *hijoIzquierdo;
 }tipoNodo;
 
-void agregarNodo (tipoNodo *raiz){
-	int num;
-	printf ("\nIngrese un numero: ");
-	scanf ("%d", &num);
-	if (raiz == NULL){
-		raiz = (tipoNodo *) malloc (sizeof(tipoNodo));
-		raiz -> dato = num;
-		raiz -> hijoIzquierdo = NULL;
-		raiz -> hijoDerecho = NULL;
+//tipoNodo *raiz = NULL;
+
+void agregarNodo (tipoNodo **raiz, int numero){
+	if (*raiz == NULL){
+		*raiz = (tipoNodo *) malloc (sizeof(tipoNodo));
+		(*raiz) -> dato = numero;
+		(*raiz) -> hijoIzquierdo = NULL;
+		(*raiz) -> hijoDerecho = NULL;
+		system("clear");
+		printf ("El valor agregado: %d", (*raiz) -> dato);
 	}
-	system("clear");
-	printf ("El valor agregado: %d", raiz -> dato);
+	else{
+		if ((*raiz) -> dato >= numero){
+			agregarNodo(&(*raiz) -> hijoDerecho, numero);
+		}
+		else{
+			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);	
+		}
+	}
+}
+
+void preorden (tipoNodo *raiz){
+	if (raiz != NULL){
+		printf ("\t%d", raiz -> dato);
+		preorden (raiz -> hijoDerecho);
+		preorden (raiz -> hijoIzquierdo);
+	}
 }
 
 int menu (){
+	system("clear");
 	int opc;
 	do{
 		printf ("\n------------------------");
@@ -74,18 +90,34 @@ int menu (){
 int main (){
 	int opc;
 	tipoNodo *raiz = NULL;
+	int num = 0;
 	do {
 		opc = menu();
 		switch(opc){
-			case 1: agregarNodo(raiz);
+			case 1: 
+				agregarNodo (&raiz, 10);
+				agregarNodo (&raiz, 5);
+				agregarNodo (&raiz, 14);
+				agregarNodo (&raiz, 4);
+				agregarNodo (&raiz, 7);
+				agregarNodo (&raiz, 12);
+				agregarNodo (&raiz, 16);
+				agregarNodo (&raiz, 2);
+				agregarNodo (&raiz, 3);
+				agregarNodo (&raiz, 6);
+				agregarNodo (&raiz, 8);
+				agregarNodo (&raiz, 11);
+				agregarNodo (&raiz, 13);
+				agregarNodo (&raiz, 15);
+				agregarNodo (&raiz, 17);
+			break;
+			case 3:
+				preorden(raiz);
 			break;
 		}
 	}while (opc != 0);
 	return 0;
 }
-
-
-
 
 
 
