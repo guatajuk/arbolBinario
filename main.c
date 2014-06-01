@@ -115,7 +115,7 @@ int menu (){
 		printf ("\nArboles Binarios - Menu Principal");
 		printf ("\n---------------------------------");
 		printf ("\n1. Agregar nodos a el arbol");
-		printf ("\n2. Eliminar tsodos los nodos del arbol");
+		printf ("\n2. Eliminar todos los nodos del arbol");
 		printf ("\n3. Recorridos");
 		printf ("\n4. Contar hojas");
 		printf ("\n5. Calcular altura");
@@ -135,7 +135,6 @@ int menu (){
 int menuRecorridos (){
 	int opc;
 	do{
-		system("clear");
 		printf ("\n-----------------------------");
 		printf ("\nArboles Binarios - Recorridos");
 		printf ("\n-----------------------------");
@@ -162,26 +161,34 @@ int main (){
 	do {
 		opc = menu();
 		switch(opc){
-			case 1: 
+			case 1:
  				printf ("\nDigite un numero: ");
  				scanf("%d", &num);
  				agregarNodo (&raiz, num);
+ 				system("clear"); 
+ 				printf ("\nSe ha agregado el numero %d", num);
 			break;
 			case 2:
+				system("clear"); 
 				raiz = NULL;
-				break;
+				printf ("\nSe ha borrado el arbol");
+			break;
 			case 3:	
+				system("clear");
 				do{
 					switch (aux = menuRecorridos()){
 						case 1: 
+							system("clear");
 							printf("\nPreorden: ");
 							preOrden(raiz);
 						break;
 						case 2: 
+							system("clear");
 							printf ("\nInorden: ");
 							inOrden(raiz);
 						break;
 						case 3: 
+							system("clear");
 							printf ("\nPostorden: ");
 							postOrden(raiz);
 						break;
@@ -189,12 +196,15 @@ int main (){
 				}while (aux != 0);
 			break;
 			case 4:
-				printf ("\nLa cantidad de hojas es: %d ", contarHojas(raiz));
+				system("clear");
+				printf ("\nEl arbol tiene %d hojas", contarHojas(raiz));
 			break;
 			case 5:
+				system("clear");
 				printf ("\nLa altura del arbol es de %d niveles", altura(raiz));
 			break;
 			case 6: 
+				system("clear");
 				agregarNodo (&raiz, 10);
  				agregarNodo (&raiz, 5);
  				agregarNodo (&raiz, 14);
@@ -210,9 +220,9 @@ int main (){
  				agregarNodo (&raiz, 13);
 				agregarNodo (&raiz, 15);
  				agregarNodo (&raiz, 17);
+ 				printf ("\nSe han cargado 15 valores predeterminados");
  			break;
 		}
-		system("clear");
 	}while (opc != 0);
 	system("clear");
 	return 0;
