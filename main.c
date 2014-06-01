@@ -45,23 +45,38 @@ void agregarNodo (tipoNodo **raiz, int numero){
 		(*raiz) -> hijoIzquierdo = NULL;
 		(*raiz) -> hijoDerecho = NULL;
 		system("clear");
-		printf ("El valor agregado: %d", (*raiz) -> dato);
 	}
 	else{
 		if ((*raiz) -> dato >= numero){
-			agregarNodo(&(*raiz) -> hijoDerecho, numero);
+			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);	
 		}
 		else{
-			agregarNodo(&(*raiz) -> hijoIzquierdo, numero);	
+			agregarNodo(&(*raiz) -> hijoDerecho, numero);
 		}
 	}
 }
 
-void preorden (tipoNodo *raiz){
+void preOrden (tipoNodo *raiz){
 	if (raiz != NULL){
 		printf ("\t%d", raiz -> dato);
-		preorden (raiz -> hijoDerecho);
-		preorden (raiz -> hijoIzquierdo);
+		preOrden (raiz -> hijoIzquierdo);
+		preOrden (raiz -> hijoDerecho);
+	}
+}
+
+void postOrden (tipoNodo *raiz){
+	if (raiz != NULL){
+		postOrden (raiz -> hijoIzquierdo);
+		postOrden (raiz -> hijoDerecho);
+		printf ("\t%d", raiz -> dato);
+	}
+}
+
+void inOrden (tipoNodo *raiz){
+	if (raiz != NULL){
+		inOrden (raiz -> hijoIzquierdo);
+		printf ("\t%d", raiz -> dato);
+		inOrden (raiz -> hijoDerecho);
 	}
 }
 
@@ -69,12 +84,12 @@ int menu (){
 	system("clear");
 	int opc;
 	do{
-		printf ("\n------------------------");
-		printf ("\nArboles Binarios - Menu");
-		printf ("\n------------------------");
+		printf ("\n---------------------------------");
+		printf ("\nArboles Binarios - Menu Principal");
+		printf ("\n---------------------------------");
 		printf ("\n1. Agregar nodos a el arbol");
 		printf ("\n2. Eliminar tsodos los nodos del arbol");
-		printf ("\n3. Mostrar recorridos");
+		printf ("\n3. Recorridos");
 		printf ("\n0. Salir");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
@@ -87,41 +102,81 @@ int menu (){
 	return opc;
 }
 
+int menuRecorridos (){
+	int opc;
+	do{
+		system("clear");
+		printf ("\n-----------------------------");
+		printf ("\nArboles Binarios - Recorridos");
+		printf ("\n-----------------------------");
+		printf ("\n1. Preorden");
+		printf ("\n2. Inorden");
+		printf ("\n3. Postorden");
+		printf ("\n4. Carga rapida");
+		printf("\n0. Volver");
+		printf ("\n\tDigite su opción: ");
+		scanf ("%d", &opc);
+		if (opc < 0 || opc > 3){
+			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
+			getchar();
+			system("clear");
+		}
+	}while(opc < 0 || opc > 3);
+	return opc;
+}
+
 int main (){
 	int opc;
+	int aux;
+	int num;
 	tipoNodo *raiz = NULL;
-	int num = 0;
 	do {
 		opc = menu();
 		switch(opc){
 			case 1: 
+ 				printf ("\nDigite un numero: ");
+ 				scanf("%d", &num);
+ 				agregarNodo (&raiz, num);
+			break;
+			case 2:
+				raiz = NULL;
+			case 3:	
+				do{
+					switch (aux = menuRecorridos()){
+						case 1: 
+							printf("\nPreorden: ");
+							preOrden(raiz);
+						break;
+						case 2: 
+							printf ("\nInorden: ");
+							inOrden(raiz);
+						break;
+						case 3: 
+							printf ("\nPostorden: ");
+							postOrden(raiz);
+						break;
+					}
+				}while (aux != 0);
+			break;
+			case 4: 
 				agregarNodo (&raiz, 10);
-				agregarNodo (&raiz, 5);
-				agregarNodo (&raiz, 14);
-				agregarNodo (&raiz, 4);
-				agregarNodo (&raiz, 7);
-				agregarNodo (&raiz, 12);
-				agregarNodo (&raiz, 16);
-				agregarNodo (&raiz, 2);
-				agregarNodo (&raiz, 3);
-				agregarNodo (&raiz, 6);
+ 				agregarNodo (&raiz, 5);
+ 				agregarNodo (&raiz, 14);
+ 				agregarNodo (&raiz, 4);
+ 				agregarNodo (&raiz, 7);
+ 				agregarNodo (&raiz, 12);
+ 				agregarNodo (&raiz, 16);
+ 				agregarNodo (&raiz, 2);
+ 				agregarNodo (&raiz, 3);
+ 				agregarNodo (&raiz, 6);
 				agregarNodo (&raiz, 8);
-				agregarNodo (&raiz, 11);
-				agregarNodo (&raiz, 13);
+ 				agregarNodo (&raiz, 11);
+ 				agregarNodo (&raiz, 13);
 				agregarNodo (&raiz, 15);
-				agregarNodo (&raiz, 17);
-			break;
-			case 3:
-				preorden(raiz);
-			break;
+ 				agregarNodo (&raiz, 17);
+ 			break;
 		}
 	}while (opc != 0);
+	system("clear");
 	return 0;
 }
-
-
-
-
-
-
-
