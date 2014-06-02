@@ -111,11 +111,20 @@ void inOrder (binaryTree *root){
 	}
 }
 
+int isLeaf (binaryTree *root){
+	if (root -> rightChild == NULL && root -> leftChild == NULL){
+		return 1;	
+	}
+	else{
+		return 0;
+	}
+}
+
 int countLeaves (binaryTree *root){
 	if (root == NULL){
 		return 0;
 	}
-	if (root -> rightChild == NULL && root -> leftChild == NULL){
+	if (isLeaf(root) == 1){
 		printf ("\n%d Es hoja", root -> data);
 		return 1;
 	}
@@ -138,7 +147,7 @@ int treeHeight (binaryTree *root){
 	return 0;
 }
 
-void showLevel(binaryTree *root, int level) {
+void showLevel (binaryTree *root, int level) {
 	if (root != NULL){
 		if (level == 1) {
 			printf ("%d \t", root -> data);
@@ -150,7 +159,7 @@ void showLevel(binaryTree *root, int level) {
 	}
 }
 
-void showInvertedTree(binaryTree *root){
+void showInvertedTree (binaryTree *root){
     int height = treeHeight(root);
     for (int level = height; level >= 1; level--){
     	printf ("\nNivel %d -> ", level);
@@ -158,7 +167,7 @@ void showInvertedTree(binaryTree *root){
 	}
 }
 
-void showTree(binaryTree *root) {
+void showTree (binaryTree *root) {
 	int height = treeHeight(root);
 	for (int level = 1; level <= height; level++) {
 		printf ("\nNivel %d -> ", level);
@@ -245,7 +254,6 @@ int main (){
 			case 1:
  				printf ("\nDigite un number: ");
  				scanf("%d", &num);
- 				//addNode (&(*root), num);
  				system("clear"); 
  				printf ("Se ha agregado el numero %d", num);
 			break;

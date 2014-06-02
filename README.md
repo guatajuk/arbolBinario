@@ -11,6 +11,7 @@ implementados las siguientes funciones:
 - Altura del árbol
 - Cantidad de hojas
 - Recorrido por nivel
+- Mostrar árbol invertido
 
 Próximamente se implementará:
 
