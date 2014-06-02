@@ -144,9 +144,17 @@ void showLevel(binaryTree *root, int level) {
 			printf ("%d \t", root -> data);
 		} 
 		else {
-			printLevel(root -> leftChild, level-1);
-			printLevel(root -> rightChild, level-1);
+			showLevel(root -> leftChild, level-1);
+			showLevel(root -> rightChild, level-1);
 		}	
+	}
+}
+
+void showInvertedTree(binaryTree *root){
+    int height = treeHeight(root);
+    for (int level = height; level >= 1; level--){
+    	printf ("\nNivel %d -> ", level);
+        showLevel(root, level);
 	}
 }
 
@@ -188,15 +196,14 @@ int menu (){
 		printf ("\n3. Recorridos");
 		printf ("\n4. Contar hojas");
 		printf ("\n5. Calcular altura");
-		printf ("\n6. Mostrar el arbol por niveles");
 		printf ("\n7. Carga rapida");
 		printf ("\n0. Salir");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
 		if (opc < 0 || opc > 7){
-			system("clear");
 			printf ("Error - Opcion incorrecta");
-
+			getchar();
+			system("clear");
 		}
 	}while (opc < 0 || opc > 7);
 	return opc;
@@ -211,15 +218,17 @@ int traversalMenu (){
 		printf ("\n1. Preorden");
 		printf ("\n2. Inorden");
 		printf ("\n3. Postorden");
+		printf ("\n4. Niveles");
+		printf ("\n5. Niveles invertidos");
 		printf ("\n0. Volver");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
-		if (opc < 0 || opc > 3){
+		if (opc < 0 || opc > 5){
 			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
-	}while(opc < 0 || opc > 3);
+	}while(opc < 0 || opc > 5);
 	return opc;
 }
 
@@ -264,6 +273,14 @@ int main (){
 							printf ("\nPostorden: ");
 							postOrder(root);
 						break;
+						case 4:
+							system("clear");
+ 							showTree(root);
+ 						break;
+ 						case 5:
+ 							system("clear");
+ 							showInvertedTree(root);
+ 						break;	
 					}
 				}while (aux != 0);
 				system("clear");
@@ -277,8 +294,7 @@ int main (){
 				printf ("\nLa treeHeight del arbol es de %d niveles", treeHeight(root));
 			break;
  			case 6:
- 				system("clear");
- 				showTree(root);
+ 				
  			break;
  			case 7: 
 				system("clear");
