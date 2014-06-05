@@ -63,7 +63,7 @@ void showStack (linkedList *list){
 			binaryTree *leaf;
 			leaf = (binaryTree *) malloc (sizeof(binaryTree));	
 			*leaf = aux -> leaf;
-			printf ("\t%d", leaf -> data);
+			printf("\t%d", leaf -> data);
 			free(leaf);
 			aux = aux -> next;
 		}
@@ -89,25 +89,25 @@ void addNode (binaryTree **root, int number){
 
 void preOrder (binaryTree *root){
 	if (root != NULL){
-		printf ("\t%d", root -> data);
-		preOrder (root -> leftChild);
-		preOrder (root -> rightChild);
+		printf("\t%d", root -> data);
+		preOrder(root -> leftChild);
+		preOrder(root -> rightChild);
 	}
 }
 
 void postOrder (binaryTree *root){
 	if (root != NULL){
-		postOrder (root -> leftChild);
-		postOrder (root -> rightChild);
-		printf ("\t%d", root -> data);
+		postOrder(root -> leftChild);
+		postOrder(root -> rightChild);
+		printf("\t%d", root -> data);
 	}
 }
 
 void inOrder (binaryTree *root){
 	if (root != NULL){
-		inOrder (root -> leftChild);
-		printf ("\t%d", root -> data);
-		inOrder (root -> rightChild);
+		inOrder(root -> leftChild);
+		printf("\t%d", root -> data);
+		inOrder(root -> rightChild);
 	}
 }
 
@@ -136,7 +136,7 @@ int countLeaves (binaryTree *root){
 int treeHeight (binaryTree *root){
 	if(root != NULL){
 		int leftHeight = 1 + treeHeight(root -> leftChild);
-		int rightHeight = 1 + treeHeight (root -> rightChild);
+		int rightHeight = 1 + treeHeight(root -> rightChild);
 		if (leftHeight > rightHeight){
 			return leftHeight;
 		}
@@ -150,7 +150,7 @@ int treeHeight (binaryTree *root){
 void showLevel (binaryTree *root, int level) {
 	if (root != NULL){
 		if (level == 1) {
-			printf ("%d \t", root -> data);
+			printf("%d \t", root -> data);
 		} 
 		else {
 			showLevel(root -> leftChild, level-1);
@@ -162,7 +162,7 @@ void showLevel (binaryTree *root, int level) {
 void showInvertedTree (binaryTree *root){
     int height = treeHeight(root);
     for (int level = height; level >= 1; level--){
-    	printf ("\nNivel %d -> ", level);
+    	printf("\nNivel %d -> ", level);
         showLevel(root, level);
 	}
 }
@@ -170,97 +170,97 @@ void showInvertedTree (binaryTree *root){
 void showTree (binaryTree *root) {
 	int height = treeHeight(root);
 	for (int level = 1; level <= height; level++) {
-		printf ("\nNivel %d -> ", level);
-		showLevel (root, level);	
+		printf("\nNivel %d -> ", level);
+		showLevel(root, level);	
 	}
 }
 
-void showLongestBranches (binaryTree *root, linkedList **stack){
-	if(isLeaf(root) != 1){
+void showLongestBranch (binaryTree *root, linkedList **stack){
+	if(isLeaf (root) != 1 && root != NULL){
 		if(treeHeight(root -> leftChild) > treeHeight(root -> rightChild)){
 			push (&(*stack), *root);
-			showLongestBranches (root -> leftChild, &(*stack));
+			showLongestBranch(root -> leftChild, &(*stack));
 		}
 		
 		if (treeHeight(root -> leftChild) < treeHeight(root -> rightChild)){
 			push (&(*stack), *root);
-			showLongestBranches (root -> rightChild, &(*stack));
+			showLongestBranch(root -> rightChild, &(*stack));
 		}
 		
 		if (treeHeight(root -> leftChild) == treeHeight(root -> rightChild)){
 			push (&(*stack), *root);
-			showLongestBranches (root -> leftChild, &(*stack));
-			showLongestBranches (root -> rightChild, &(*stack));
+			showLongestBranch(root -> leftChild, &(*stack));
+			showLongestBranch(root -> rightChild, &(*stack));
 		}	
 	}
 	else{
-		printf ("\n");
-		push (&(*stack), *root);
+		printf("\n");
+		push(&(*stack), *root);
 		showStack(*stack);
 		stack = NULL;
 	}
 }
 
 void preload (binaryTree **root){
-	addNode (&(*root), 10);
- 	addNode (&(*root), 5);
- 	addNode (&(*root), 14);
- 	addNode (&(*root), 4);
-	addNode (&(*root), 7);
-	addNode (&(*root), 12);
-	addNode (&(*root), 16);
-	addNode (&(*root), 2);
-	addNode (&(*root), 3);
-	addNode (&(*root), 6);
-	addNode (&(*root), 8);
-	addNode (&(*root), 11);
-	addNode (&(*root), 13);
-	addNode (&(*root), 15);
-	addNode (&(*root), 17);
-	printf ("Se han cargado 15 valores predeterminados");
+	addNode(&(*root), 10);
+ 	addNode(&(*root), 5);
+ 	addNode(&(*root), 14);
+ 	addNode(&(*root), 4);
+	addNode(&(*root), 7);
+	addNode(&(*root), 12);
+	addNode(&(*root), 16);
+	addNode(&(*root), 2);
+	addNode(&(*root), 3);
+	addNode(&(*root), 6);
+	addNode(&(*root), 8);
+	addNode(&(*root), 11);
+	addNode(&(*root), 13);
+	addNode(&(*root), 15);
+	addNode(&(*root), 17);
+	printf("Se han cargado 15 valores predeterminados");
 }
 
 int menu (){
 	int opc;
 	do{
-		printf ("\n---------------------------------");
-		printf ("\nArboles Binarios - Menu Principal");
-		printf ("\n---------------------------------");
-		printf ("\n1. Agregar nodos al arbol");
-		printf ("\n2. Eliminar todos los nodos del arbol");
-		printf ("\n3. Recorridos");
-		printf ("\n4. Contar hojas");
-		printf ("\n5. Calcular altura");
-		printf ("\n7. Carga rapida");
-		printf ("\n0. Salir");
-		printf ("\n\tDigite su opción: ");
-		scanf ("%d", &opc);
+		printf("\n---------------------------------");
+		printf("\nArboles Binarios - Menu Principal");
+		printf("\n---------------------------------");
+		printf("\n1. Agregar nodos al arbol");
+		printf("\n2. Eliminar todos los nodos del arbol");
+		printf("\n3. Recorridos");
+		printf("\n4. Contar hojas");
+		printf("\n5. Calcular altura");
+		printf("\n7. Carga rapida");
+		printf("\n0. Salir");
+		printf("\n\tDigite su opción: ");
+		scanf("%d", &opc);
 		if (opc < 0 || opc > 7){
 			printf ("Error - Opcion incorrecta");
 			getchar();
 			system("clear");
 		}
-	}while (opc < 0 || opc > 7);
+	}while(opc < 0 || opc > 7);
 	return opc;
 }
 
 int traversalMenu (){
 	int opc;
 	do{
-		printf ("\n-----------------------------");
-		printf ("\nArboles Binarios - Recorridos");
-		printf ("\n-----------------------------");
-		printf ("\n1. Preorden");
-		printf ("\n2. Inorden");
-		printf ("\n3. Postorden");
-		printf ("\n4. Niveles");
-		printf ("\n5. Niveles invertidos");
-		printf ("\n6. Ramas del arbol");
-		printf ("\n0. Volver");
-		printf ("\n\tDigite su opción: ");
-		scanf ("%d", &opc);
+		printf("\n-----------------------------");
+		printf("\nArboles Binarios - Recorridos");
+		printf("\n-----------------------------");
+		printf("\n1. Preorden");
+		printf("\n2. Inorden");
+		printf("\n3. Postorden");
+		printf("\n4. Niveles");
+		printf("\n5. Niveles invertidos");
+		printf("\n6. Rama mas larga");
+		printf("\n0. Volver");
+		printf("\n\tDigite su opción: ");
+		scanf("%d", &opc);
 		if (opc < 0 || opc > 6){
-			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
+			printf("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
@@ -301,7 +301,7 @@ int main (){
 						break;
 						case 2: 
 							system("clear");
-							printf ("\nInorden: ");
+							printf("\nInorden: ");
 							inOrder(root);
 						break;
 						case 3: 
@@ -319,16 +319,16 @@ int main (){
  						break;	
  						case 6:
  							system("clear");
- 							printf ("La rama mas larga es: ");
- 							showLongestBranches (root, &list);
+ 							printf("La rama mas larga es: ");
+ 							showLongestBranch(root, &list);
  						break;
 					}
-				}while (aux != 0);
+				}while(aux != 0);
 				system("clear");
 			break;
 			case 4:
 				system("clear");
-				printf ("\nEl arbol tiene %d hojas", countLeaves(root));
+				printf("\nEl arbol tiene %d hojas", countLeaves(root));
 			break;
 			case 5:
 				system("clear");

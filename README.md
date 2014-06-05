@@ -12,11 +12,11 @@ implementados las siguientes funciones:
 - Cantidad de hojas
 - Recorrido por nivel
 - Mostrar árbol invertido
+- Mostrar la rama más larga
 
 Próximamente se implementará:
 
 - Mostrar las ramas del árbol
-- Mostrar la rama más larga
 - Mostrar la rama más corta
 - Balancear el árbol
 - Hacer rotaciones simples a la izquierda y derecha
