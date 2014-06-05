@@ -171,7 +171,33 @@ void showTree (binaryTree *root) {
 	int height = treeHeight(root);
 	for (int level = 1; level <= height; level++) {
 		printf ("\nNivel %d -> ", level);
-		showLevel(root, level);	
+		showLevel (root, level);	
+	}
+}
+
+void showLongestBranches (binaryTree *root, linkedList **stack){
+	if(isLeaf(root) != 1){
+		if(treeHeight(root -> leftChild) > treeHeight(root -> rightChild)){
+			push (&(*stack), *root);
+			showLongestBranches (root -> leftChild, &(*stack));
+		}
+		
+		if (treeHeight(root -> leftChild) < treeHeight(root -> rightChild)){
+			push (&(*stack), *root);
+			showLongestBranches (root -> rightChild, &(*stack));
+		}
+		
+		if (treeHeight(root -> leftChild) == treeHeight(root -> rightChild)){
+			push (&(*stack), *root);
+			showLongestBranches (root -> leftChild, &(*stack));
+			showLongestBranches (root -> rightChild, &(*stack));
+		}	
+	}
+	else{
+		printf ("\n");
+		push (&(*stack), *root);
+		showStack(*stack);
+		stack = NULL;
 	}
 }
 
@@ -229,15 +255,16 @@ int traversalMenu (){
 		printf ("\n3. Postorden");
 		printf ("\n4. Niveles");
 		printf ("\n5. Niveles invertidos");
+		printf ("\n6. Ramas del arbol");
 		printf ("\n0. Volver");
 		printf ("\n\tDigite su opción: ");
 		scanf ("%d", &opc);
-		if (opc < 0 || opc > 5){
+		if (opc < 0 || opc > 6){
 			printf ("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
-	}while(opc < 0 || opc > 5);
+	}while(opc < 0 || opc > 6);
 	return opc;
 }
 
@@ -254,6 +281,7 @@ int main (){
 			case 1:
  				printf ("\nDigite un number: ");
  				scanf("%d", &num);
+ 				addNode(&root, num);
  				system("clear"); 
  				printf ("Se ha agregado el numero %d", num);
 			break;
@@ -289,6 +317,11 @@ int main (){
  							system("clear");
  							showInvertedTree(root);
  						break;	
+ 						case 6:
+ 							system("clear");
+ 							printf ("La rama mas larga es: ");
+ 							showLongestBranches (root, &list);
+ 						break;
 					}
 				}while (aux != 0);
 				system("clear");
@@ -299,10 +332,10 @@ int main (){
 			break;
 			case 5:
 				system("clear");
-				printf ("\nLa treeHeight del arbol es de %d niveles", treeHeight(root));
+				printf ("\nLa altura del arbol es de %d niveles", treeHeight(root));
 			break;
  			case 6:
- 				
+ 				system("clear");
  			break;
  			case 7: 
 				system("clear");
