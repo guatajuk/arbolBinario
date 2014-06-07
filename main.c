@@ -167,7 +167,7 @@ void showInvertedTree (binaryTree *root){
 	}
 }
 
-void showTree (binaryTree *root) {
+void showTree (binaryTree *root){
 	int height = treeHeight(root);
 	for (int level = 1; level <= height; level++) {
 		printf("\nNivel %d -> ", level);
@@ -181,17 +181,35 @@ void showLongestBranch (binaryTree *root, linkedList **stack){
 			push (&(*stack), *root);
 			showLongestBranch(root -> leftChild, &(*stack));
 		}
-		
 		if (treeHeight(root -> leftChild) < treeHeight(root -> rightChild)){
 			push (&(*stack), *root);
 			showLongestBranch(root -> rightChild, &(*stack));
 		}
-		
 		if (treeHeight(root -> leftChild) == treeHeight(root -> rightChild)){
+			printf("\nError - Hay varias ramas en la maxima altura");
+		}
+	}
+	else{
+		printf("\n");
+		push(&(*stack), *root);
+		showStack(*stack);
+		stack = NULL;
+	}
+}
+
+void showShortestBranch (binaryTree *root, linkedList **stack){
+	if(isLeaf (root) != 1 && root != NULL){
+		if(treeHeight(root -> leftChild) > treeHeight(root -> rightChild)){
+			push (&(*stack), *root);
+			showLongestBranch(root -> rightChild, &(*stack));
+		}
+		if (treeHeight(root -> leftChild) < treeHeight(root -> rightChild)){
 			push (&(*stack), *root);
 			showLongestBranch(root -> leftChild, &(*stack));
-			showLongestBranch(root -> rightChild, &(*stack));
 		}	
+		if (treeHeight(root -> leftChild) == treeHeight(root -> rightChild)){
+			printf("\nError - Hay varias ramas en la minima altura");
+		}
 	}
 	else{
 		printf("\n");
@@ -202,6 +220,7 @@ void showLongestBranch (binaryTree *root, linkedList **stack){
 }
 
 void preload (binaryTree **root){
+	*root = NULL;
 	addNode(&(*root), 10);
  	addNode(&(*root), 5);
  	addNode(&(*root), 14);
@@ -220,6 +239,57 @@ void preload (binaryTree **root){
 	printf("Se han cargado 15 valores predeterminados");
 }
 
+void preload1 (binaryTree **root){
+	*root = NULL;
+	addNode(&(*root), 20);
+	addNode(&(*root), 10);
+	addNode(&(*root), 30);
+	addNode(&(*root), 5);
+	addNode(&(*root), 15);
+	addNode(&(*root), 25);
+	addNode(&(*root), 35);
+	addNode(&(*root), 3);
+	addNode(&(*root), 7);
+	addNode(&(*root), 13);
+	addNode(&(*root), 17);
+	addNode(&(*root), 23);
+	addNode(&(*root), 27);
+	addNode(&(*root), 33);
+	addNode(&(*root), 37);
+	printf("Se han cargado 16 valores predeterminados");
+}
+
+void preload2 (binaryTree **root){
+	*root = NULL;
+	addNode(&(*root), 40);
+	addNode(&(*root), 20);
+	addNode(&(*root), 10);
+	addNode(&(*root), 30);
+	addNode(&(*root), 50);
+	printf("Se han cargado 5 valores predeterminados");
+}
+
+int menuCarga (){
+	int opc;
+	do{
+		printf("\n-------------------------------");
+		printf("\nArboles Binarios - Carga rapida");
+		printf("\n-------------------------------");
+		printf("\n1. Carga 1");
+		printf("\n2. Carga 2");
+		printf("\n3. Carga 3");
+		printf("\n0. Salir");
+		printf("\n\tDigite su opción: ");
+		scanf("%d", &opc);
+		if (opc < 0 || opc > 3){
+			printf ("Error - Opcion incorrecta");
+			getchar();
+			system("clear");
+		}
+	}while(opc < 0 || opc > 3);
+	return opc;
+}
+
 int menu (){
 	int opc;
 	do{
@@ -231,6 +301,7 @@ int menu (){
 		printf("\n3. Recorridos");
 		printf("\n4. Contar hojas");
 		printf("\n5. Calcular altura");
+		printf("\n6. Mostrar ramas");
 		printf("\n7. Carga rapida");
 		printf("\n0. Salir");
 		printf("\n\tDigite su opción: ");
@@ -256,15 +327,16 @@ int traversalMenu (){
 		printf("\n4. Niveles");
 		printf("\n5. Niveles invertidos");
 		printf("\n6. Rama mas larga");
+		printf("\n7. Rama mas corta");
 		printf("\n0. Volver");
 		printf("\n\tDigite su opción: ");
 		scanf("%d", &opc);
-		if (opc < 0 || opc > 6){
+		if (opc < 0 || opc > 7){
 			printf("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
-	}while(opc < 0 || opc > 6);
+	}while(opc < 0 || opc > 7);
 	return opc;
 }
 
@@ -322,6 +394,11 @@ int main (){
  							printf("La rama mas larga es: ");
  							showLongestBranch(root, &list);
  						break;
+ 						case 7: 
+ 							system("clear");
+ 							printf("La rama mas corta es: ");
+ 							showShortestBranch(root, &list);
+ 						break;
 					}
 				}while(aux != 0);
 				system("clear");
@@ -337,9 +414,25 @@ int main (){
  			case 6:
  				system("clear");
  			break;
- 			case 7: 
-				system("clear");
-				preload(&root);
+ 			case 7:
+ 				do {
+ 					system("clear");
+ 					switch (aux = menuCarga()){
+ 						case 1:
+ 							system("clear");
+ 							preload(&root);	
+ 						break;
+ 						case 2:
+ 							system("clear");
+ 							preload1(&root);	
+ 						break;
+ 						case 3:
+ 							system("clear");
+ 							preload2(&root);	
+ 						break;
+ 					}
+ 				}while(aux != 0);
+ 				system("clear");
  			break;
 		}
 	}while (opc != 0);
