@@ -56,6 +56,12 @@ void push (linkedList **list, binaryTree leaf){
 	}
 }
 
+void pop (linkedList **list){
+	if (*list != NULL){
+		*list = (*list) -> next;
+	}
+}
+
 void showStack (linkedList *list){
 	if (list != NULL){
 		linkedList *aux = list;
@@ -219,6 +225,23 @@ void showShortestBranch (binaryTree *root, linkedList **stack){
 	}
 }
 
+void showAllBranches (binaryTree *root, linkedList **stack){
+	if (root != NULL){
+		push (&(*stack), *root);
+		if (root -> leftChild != NULL){
+			showAllBranches (root -> leftChild, &(*stack));
+		}
+		if (root -> rightChild != NULL){
+			showAllBranches (root -> rightChild, &(*stack));
+		}
+		else if (isLeaf(root) == 1){
+			showStack(*stack);
+			printf("\n");
+		}		
+		pop(&(*stack));
+	}
+}
+
 void preload (binaryTree **root){
 	*root = NULL;
 	addNode(&(*root), 10);
@@ -269,15 +292,58 @@ void preload2 (binaryTree **root){
 	printf("Se han cargado 5 valores predeterminados");
 }
 
-int menuCarga (){
+int generalMenu(){
+	int opc;
+	do{
+		printf("\n----------------------------------------");
+		printf("\nArboles Binarios - Operaciones Generales");
+		printf("\n----------------------------------------");
+		printf("\n1.Contar Hojas");
+		printf("\n2.Contar Niveles");
+		printf("\n0. Salir");
+		printf("\n\tDigite su opción: ");
+		scanf("%d", &opc);
+		if (opc < 0 || opc > 2){
+			printf ("Error - Opcion incorrecta");
+			getchar();
+			system("clear");
+		}
+	}while(opc < 0 || opc > 2);
+	return opc;
+}
+
+int loadMenu (){
 	int opc;
 	do{
 		printf("\n-------------------------------");
 		printf("\nArboles Binarios - Carga rapida");
 		printf("\n-------------------------------");
-		printf("\n1. Carga 1");
+		printf("\n1.Carga 1");
+		printf("\n                              10");
+		printf("\n                  /-----------|-----------\\ ");
+		printf("\n                 5                        14 ");
+		printf("\n            /----+----\\              /----+----\\ ");
+		printf("\n           4           7            12         16 ");
+		printf("\n       /---+        /--+--\\      /--+--\\     /--+--\\ ");
+		printf("\n      2            6       8    11     13   15     17 ");
+		printf("\n      +-\\ ");
+		printf("\n         3");
+		printf("\n");
 		printf("\n2. Carga 2");
+		printf("\n                             20");
+		printf("\n                  /-----------|-----------\\ ");
+		printf("\n                 10                       30 ");
+		printf("\n            /----+----\\              /----+----\\ ");
+		printf("\n           5          15            25          35 ");
+		printf("\n       /---+---\\  /--+--\\      /--+--\\     /--+--\\ ");
+		printf("\n      3         7  13     17    23     27    33    37 ");
+		printf("\n");
 		printf("\n3. Carga 3");
+		printf("\n                             40");
+		printf("\n                  /-----------|-----------\\ ");
+		printf("\n                 20                       50 ");
+		printf("\n            /----+----\\");             
+		printf("\n           10         30");
 		printf("\n0. Salir");
 		printf("\n\tDigite su opción: ");
 		scanf("%d", &opc);
@@ -287,31 +353,6 @@ int menuCarga (){
 			system("clear");
 		}
 	}while(opc < 0 || opc > 3);
-	return opc;
-}
-
-int menu (){
-	int opc;
-	do{
-		printf("\n---------------------------------");
-		printf("\nArboles Binarios - Menu Principal");
-		printf("\n---------------------------------");
-		printf("\n1. Agregar nodos al arbol");
-		printf("\n2. Eliminar todos los nodos del arbol");
-		printf("\n3. Recorridos");
-		printf("\n4. Contar hojas");
-		printf("\n5. Calcular altura");
-		printf("\n6. Mostrar ramas");
-		printf("\n7. Carga rapida");
-		printf("\n0. Salir");
-		printf("\n\tDigite su opción: ");
-		scanf("%d", &opc);
-		if (opc < 0 || opc > 7){
-			printf ("Error - Opcion incorrecta");
-			getchar();
-			system("clear");
-		}
-	}while(opc < 0 || opc > 7);
 	return opc;
 }
 
@@ -326,17 +367,60 @@ int traversalMenu (){
 		printf("\n3. Postorden");
 		printf("\n4. Niveles");
 		printf("\n5. Niveles invertidos");
-		printf("\n6. Rama mas larga");
-		printf("\n7. Rama mas corta");
 		printf("\n0. Volver");
 		printf("\n\tDigite su opción: ");
 		scanf("%d", &opc);
-		if (opc < 0 || opc > 7){
+		if (opc < 0 || opc > 5){
 			printf("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
 			getchar();
 			system("clear");
 		}
-	}while(opc < 0 || opc > 7);
+	}while(opc < 0 || opc > 5);
+	return opc;
+}
+
+int branchesMenu (){
+	int opc;
+	do{
+		printf("\n------------------------");
+		printf("\nArboles Binarios - Ramas");
+		printf("\n------------------------");
+		printf("\n1. Rama mas larga");
+		printf("\n2. Rama mas corta");
+		printf("\n3. Mostrar todas las ramas");	
+		printf("\n0. Volver");
+		printf("\n\tDigite su opción: ");
+		scanf("%d", &opc);
+		if (opc < 0 || opc > 3){
+			printf("\nError, valor fuera del rango permitido, presione cualquier tecla para continuar\n");
+			getchar();
+			system("clear");
+		}
+	}while(opc < 0 || opc > 3);
+	return opc;
+}
+
+int menu (){
+	int opc;
+	do{
+		printf("\n---------------------------------");
+		printf("\nArboles Binarios - Menu Principal");
+		printf("\n---------------------------------");
+		printf("\n1. Agregar nodos al arbol manualmente");
+		printf("\n2. Eliminar todos los nodos del arbol");
+		printf("\n3. Recorridos");
+		printf("\n4. Operaciones con ramas");
+		printf("\n5. Operaciones generales");
+		printf("\n6. Carga rapida");
+		printf("\n0. Salir");
+		printf("\n\tDigite su opción: ");
+		scanf("%d", &opc);
+		if (opc < 0 || opc > 6){
+			printf ("Error - Opcion incorrecta");
+			getchar();
+			system("clear");
+		}
+	}while(opc < 0 || opc > 6);
 	return opc;
 }
 
@@ -348,8 +432,7 @@ int main (){
 	binaryTree *root = NULL;
 	linkedList *list = NULL;
 	do {
-		opc = menu();
-		switch(opc){
+		switch(opc = menu()){
 			case 1:
  				printf ("\nDigite un number: ");
  				scanf("%d", &num);
@@ -365,7 +448,7 @@ int main (){
 			case 3:	
 				system("clear");
 				do{
-					switch (aux = traversalMenu()){
+					switch(aux = traversalMenu()){
 						case 1: 
 							system("clear");
 							printf("\nPreorden: ");
@@ -389,53 +472,74 @@ int main (){
  							system("clear");
  							showInvertedTree(root);
  						break;	
- 						case 6:
- 							system("clear");
- 							printf("La rama mas larga es: ");
- 							showLongestBranch(root, &list);
- 						break;
- 						case 7: 
- 							system("clear");
- 							printf("La rama mas corta es: ");
- 							showShortestBranch(root, &list);
- 						break;
 					}
 				}while(aux != 0);
 				system("clear");
 			break;
 			case 4:
 				system("clear");
-				printf("\nEl arbol tiene %d hojas", countLeaves(root));
+				do{
+ 					switch(aux = branchesMenu()){
+						case 1:
+ 							system("clear");
+ 							printf("La rama mas larga es: ");
+ 							showLongestBranch(root, &list);
+ 						break;
+ 						case 2: 
+ 							system("clear");
+ 							printf("La rama mas corta es: ");
+ 							showShortestBranch(root, &list);
+ 						break;
+ 						case 3: 
+ 							system("clear");
+ 							printf ("\nRamas del arbol: \n\n");
+ 							showAllBranches(root, &list);
+ 						break;
+ 					}
+ 				}while(aux != 0);
+ 				system("clear");
 			break;
 			case 5:
+				do{
+					system("clear");
+ 					switch(aux = generalMenu()){
+						case 1: 
+							system("clear");
+							printf("\nEl arbol tiene %d hojas", countLeaves(root));
+						break;
+						case 2:
+							system("clear");
+							printf ("\nLa altura del arbol es de %d niveles", treeHeight(root));
+						break;
+					}
+				}while(aux != 0);
 				system("clear");
-				printf ("\nLa altura del arbol es de %d niveles", treeHeight(root));
 			break;
  			case 6:
- 				system("clear");
- 			break;
- 			case 7:
- 				do {
+ 				do{
  					system("clear");
- 					switch (aux = menuCarga()){
+ 					switch (aux = loadMenu()){
  						case 1:
  							system("clear");
- 							preload(&root);	
+ 							preload(&root);
+ 							aux = 0;
  						break;
  						case 2:
  							system("clear");
  							preload1(&root);	
+ 							aux = 0;
  						break;
  						case 3:
  							system("clear");
  							preload2(&root);	
+ 							aux = 0;
  						break;
  					}
  				}while(aux != 0);
  				system("clear");
  			break;
 		}
-	}while (opc != 0);
+	}while(opc != 0);
 	system("clear");
 	return 0;
 }
