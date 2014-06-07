@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 
-// Copyright (c) YEAR NAME
+// Copyright (c) 2014
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,11 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*----------------------------------------------*
- |Julián Alberto Gaitán Arias					|
+ |Julián Alberto Gaitán Arias                   |
  |Universidad de Caldas - Facultad de Ingeniería|
- |Ingeniería en Sistemas y Computación			|
- |Twitter: @guatajuk							|
- |GitHub: guatajuk								|
+ |Ingeniería en Sistemas y Computación          |
+ |Twitter: @guatajuk                            |
+ |GitHub: guatajuk                              |
  *--------------------------------------------- */
 
 #include <stdio.h>
@@ -166,10 +166,10 @@ void showLevel (binaryTree *root, int level) {
 }
 
 void showInvertedTree (binaryTree *root){
-    int height = treeHeight(root);
-    for (int level = height; level >= 1; level--){
-    	printf("\nNivel %d -> ", level);
-        showLevel(root, level);
+	int height = treeHeight(root);
+	for (int level = height; level >= 1; level--){
+		printf("\nNivel %d -> ", level);
+		showLevel(root, level);
 	}
 }
 
@@ -292,14 +292,14 @@ void preload2 (binaryTree **root){
 	printf("Se han cargado 5 valores predeterminados");
 }
 
-int generalMenu(){
+int generalMenu (){
 	int opc;
 	do{
 		printf("\n----------------------------------------");
 		printf("\nArboles Binarios - Operaciones Generales");
 		printf("\n----------------------------------------");
-		printf("\n1.Contar Hojas");
-		printf("\n2.Contar Niveles");
+		printf("\n1. Contar Hojas");
+		printf("\n2. Contar Niveles");
 		printf("\n0. Salir");
 		printf("\n\tDigite su opción: ");
 		scanf("%d", &opc);
