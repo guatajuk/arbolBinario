@@ -29,6 +29,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
+//srand(time(NULL));
 
 typedef struct binaryTree {
 	int data;
@@ -242,6 +245,20 @@ void showAllBranches (binaryTree *root, linkedList **stack){
 	}
 }
 
+void search (binaryTree *root, int value){
+	if (root != NULL){
+		if (root -> data == value){
+			printf ("\nEl valor si existe dentro del arbol");
+		}
+		if (value > root -> data){
+			search(root -> rightChild, value);
+		}
+		if (value < root -> data){
+			search(root -> leftChild, value);
+		}
+	}
+}
+
 void preload (binaryTree **root){
 	*root = NULL;
 	addNode(&(*root), 10);
@@ -300,15 +317,16 @@ int generalMenu (){
 		printf("\n----------------------------------------");
 		printf("\n1. Contar Hojas");
 		printf("\n2. Contar Niveles");
+		printf("\n3. Buscar valor");
 		printf("\n0. Salir");
 		printf("\n\tDigite su opción: ");
 		scanf("%d", &opc);
-		if (opc < 0 || opc > 2){
+		if (opc < 0 || opc > 3){
 			printf ("Error - Opcion incorrecta");
 			getchar();
 			system("clear");
 		}
-	}while(opc < 0 || opc > 2);
+	}while(opc < 0 || opc > 3);
 	return opc;
 }
 
@@ -509,7 +527,13 @@ int main (){
 						break;
 						case 2:
 							system("clear");
-							printf ("\nLa altura del arbol es de %d niveles", treeHeight(root));
+							printf("\nLa altura del arbol es de %d niveles", treeHeight(root));
+						break;
+						case 3:
+							system("clear");
+							printf("\nIngrese el valor a buscar: ");
+							scanf("%d", &num);
+							search(root, num);
 						break;
 					}
 				}while(aux != 0);

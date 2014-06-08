@@ -16,11 +16,11 @@ implementados las siguientes funciones:
 - Mostrar la rama más corta
 - Mostrar las ramas del árbol
 - Mostrar la estructura del árbol
+- Buscar un valor dentro del árbol
 
 Próximamente se implementará:
 
 - Balancear el árbol
 - Hacer rotaciones simples a la izquierda y derecha
 - Hacer rotaciones dobles a la izquierda y derecha
-- Buscar un valor dentro del árbol
 - Eliminar nodos del árbol
